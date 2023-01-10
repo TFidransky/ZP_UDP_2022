@@ -3,11 +3,10 @@ from collections import Counter
 from itertools import chain
 import os
 
-# nejdrive nacte soubor s danym nazvem (v zakladu "vstup.csv") a vraci (returns) a tiskne (print) nejvíce se vyskytující element a jeho frekvenci
-# pote to seznamy seznamu zmeni na jeden vetsi seznam (chain) a pote seradi a pomoci Counter pocita frekvence jednotlivych prvku v "data" (nas serazeny  velky seznam)
-# most_common hleda prvek co se objevuje nejcasteji (=modus), frequency frekvenci tohoto prvku
+# nejdrive nacte soubor s danym nazvem (v zakladu "vstup.csv") a vraci (returns) a tiskne (print) nejvíce se vyskytující element a jeho frekvenci, vraci ten input jako "data"
+# pote to seznamy seznamu zmeni na jeden vetsi seznam (chain) a pote seradi a pomoci Counter pocita frekvence jednotlivych prvku v "data_sorted" (nas serazeny  velky seznam)
+# most_common hleda prvek co se objevuje nejcasteji (=modus), frequency hleda frekvenci tohoto prvku
 # print vytiskne prvek, ktery je v souboru nejcasteji (= modus) a jeho cetnost
-# return zde neni vyloženě potřeba, ale kdybychom nechteli jen vypsat modus, ale i s nim nejak dal pocitat, tak by se return hodil.
 # v poslednich radcich probiha exekuce cele funkce (a u tohoto programu i celeho programu)
 
 # trida pro vyjimku prazdneho souboru. Chtel jsem se vyhnout uziti knihovny pandas, kdyz to neni defaultni knihovna a musi se stahnout

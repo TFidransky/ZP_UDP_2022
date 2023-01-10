@@ -1,4 +1,5 @@
 import re
+import os
 
 # Nejdrive promenna string odstrani nevhodne symboly, ktere by se v tabulce pletly - predevsim ",", ".", "?", "!". Respektive
 # to odstrani všechny symboly, ktere nejsou v abecede nebo to nejsou cisla
@@ -6,6 +7,7 @@ import re
 # tak se pricte +1, pokud ne, tak se mu prideli 1. To se provadi znovu do te doby, nez se ukonci for cyklus (= dojede na konec inputu).
 # char_freq se pote seradi podle cetnosti znaku, tedy pokud se napr. "u" vyskytlo 4x a "b" 3x, tak "u" bude prvni, ac abecedne by bylo druhe
 # poslední for cyklus tiskne znaky, opet dokud nevypise vsechny znaky co se objevily v inputu.
+# ve funkci main se spouští while cyklus, který ve finále nutí uživatele, aby něco zadal (bude se ptát znovu, dokud uživatel něco nezadá)
 
 def char_freq(string):
   string = string.upper()
@@ -24,7 +26,13 @@ def char_freq(string):
     print(f"{char}: {freq}")
 
 def main():
-  string = input("Zadeje vetu, u ktere chcete zjistit frekvenci: ")
-  char_freq(string)
+  while True:
+    string = input("Zadejte větu, u které chcete zjistit frekvenci: ")
+    if string.strip() != "":
+        char_freq(string)
+        break
+    else:
+        print("Vstup nebyl zadán, zkuste to znovu.")
+
 
 main()
