@@ -1,38 +1,39 @@
 import re
 import os
 
-# Nejdrive promenna string odstrani nevhodne symboly, ktere by se v tabulce pletly - predevsim ",", ".", "?", "!". Respektive
-# to odstrani všechny symboly, ktere nejsou v abecede nebo to nejsou cisla
-# Pote se vytvori prazdny slovnik, pote se spusti for cyklus, dlouhy podle delky inputu. Pokud uz znak byl nekdy zapocitan (= objevil se v stringu drive),
-# tak se pricte +1, pokud ne, tak se mu prideli 1. To se provadi znovu do te doby, nez se ukonci for cyklus (= dojede na konec inputu).
-# char_freq se pote seradi podle cetnosti znaku, tedy pokud se napr. "u" vyskytlo 4x a "b" 3x, tak "u" bude prvni, ac abecedne by bylo druhe
-# poslední for cyklus tiskne znaky, opet dokud nevypise vsechny znaky co se objevily v inputu.
-# ve funkci main se spouští while cyklus, který ve finále nutí uživatele, aby něco zadal (bude se ptát znovu, dokud uživatel něco nezadá)
+class CharFrequencyAnalyzer:
+    # Constructor that prompts user for input string.
+    def __init__(self):
+        self.string = input("Input the sentence of which you want to know the frequency of each character: ")
 
-def char_freq(string):
-  string = string.upper()
-  char_freq = {}
+    # Counts the frequency of each character in the input string and prints the results in descending order (from most frequent to least frequent).
+      # If the character didnt appear yet, it will give that character value 1, if it did appear prior to that appearance, it will add 1 to its current value.
+      # The program doesn't count special symbols like . , : and simillar. It could be modified so it would count only letters from specific alphabets and/or numbers, 
+      # but it would not be as universal, because different alphabets use specific symbols, such as ř or š, that are not universally used and therefore it would be hard to implement a universal counter
+    def char_freq(self):
+        string = self.string.upper()
+        char_freq = {}
+        unwanted_chars = ".,:!?_-;%ˇ´<>'(){}[]"
 
-  for char in string:
-    if char != " ":
-      if char not in char_freq:
-        char_freq[char] = 1
-      else:
-        char_freq[char] += 1
+        for char in string:
+            if char not in unwanted_chars and char != " ":
+                if char not in char_freq:
+                    char_freq[char] = 1
+                else:
+                    char_freq[char] += 1
 
-  char_freq = sorted(char_freq.items(), key=lambda x: x[1], reverse=True)
+        char_freq = sorted(char_freq.items(), key=lambda x: x[1], reverse=True)
 
-  for char, freq in char_freq:
-    print(f"{char}: {freq}")
+        for char, freq in char_freq:
+            print(f"{char}: {freq}")
+      
+      # Main function that calls the char_freq function if a valid input string is provided.
+    def main(self):
+        if self.string.strip() != "":
+            self.char_freq()
+        else:
+            print("No input was recorded, try again.")
 
-def main():
-  while True:
-    string = input("Zadejte větu, u které chcete zjistit frekvenci: ")
-    if string.strip() != "":
-        char_freq(string)
-        break
-    else:
-        print("Vstup nebyl zadán, zkuste to znovu.")
-
-
-main()
+  # Create an instance of the CharFrequencyAnalyzer class and call the main function
+analyzer = CharFrequencyAnalyzer()
+analyzer.main()
