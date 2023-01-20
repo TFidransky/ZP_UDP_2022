@@ -15,9 +15,10 @@ class MyFileProcessor:
     def __init__(self, input_file):
         self.input_file = input_file
 
-        # Program controls if the file is empty or if it exists at all. If it doesn't exist, it asks the user again, for a different input.
-        # The file is first read using the csv library and stored in a list of lists called "data".
-        # If the file is not found or is empty, the program raises an exception and exits.
+        # Program controls if the file is empty and if it exists at all. If it doesn't exist, it asks the user again, for a different input. 
+            # If the file is empty, it will give the user an appropriate error code and then the program will end.
+        # The file is first read using the CSV library and then stored in a list of lists 
+            # list of lists = each sub-list represents exactly one row (but all columns in that one row) in the file called "data". It returns this list for further usage.
     def open_file(self):
         while True:
             try:
@@ -34,32 +35,45 @@ class MyFileProcessor:
                 exit(1)
         return data
 
-        # The function modus_calculation takes the data as an input and first flattens the list of lists into a single list using itertools chain.
-        # Then it sorts the list using bubble sort algorithm.
-            # The Bubble sort is a simple algorithm and is easy to implement.
-            # It's not the most efficient algorithm for big datasets, but this program is not really meant for that - and it is fairly efficient for small datasets.
-        # It then uses the Counter class from the collections module to count the frequency of each element in the sorted list.
-        # It stores the most common element and its frequency in the variables "most_common" and "frequency".
-        # Finally, it prints the most common element and its frequency.
-    def modus_calculation(self, data):
+        # The function prepare_data takes the list of lists "data" as an input and flattens it into a single list using itertools chain.
+        # It returns this one singular list for further usage, specifically for sorting
+    def prepare_data(self, data):
         data_sorted = chain(*data)
         data_sorted = list(data_sorted)
+        return data_sorted
+
+        # The bubble_sort sorts the list using bubble sort algorithm.
+            # The Bubble sort is a simple algorithm and is quite easy to implement.
+            # It's not the most efficient algorithm for big datasets, but this program is not really meant for that - and it's fairly efficient for small datasets.
+        # It then returns this list so the modus can be found in the next function
+    def bubble_sort(self, data_sorted):
         for i in range(len(data_sorted)):
             for j in range(len(data_sorted)-1):
                 if data_sorted[j] > data_sorted[j+1]:
                     data_sorted[j], data_sorted[j+1] = data_sorted[j+1], data_sorted[j]
+        return data_sorted
+
+        # This function takes the now sorted data as input and uses the Counter class to count the frequency of each element in that sorted list.
+        # It then stores the most common element and its frequency in the variables "most_common" and "frequency" respectively and returns them as a tuple.
+    def modus_finder(self, data_sorted):
         c = Counter(data_sorted)
-
         most_common, frequency = c.most_common(1)[0]
+        return most_common, frequency
 
+        # Finally, this part takes the tuple of most frequent element and its frequency and prints it out to the terminal.
+    def print_modus(self, most_common, frequency):
         print(f"The element that appeared most frequently in the file was: {most_common}.")
         print(f"This element (= modus) appeared {frequency} times in the file.")
 
-    # It asks user for the name of the file. It then goes into MyFileProcessor class and goes through all the functions there. For more thorough explaination, go to individual functions 
+    # After program startup, the program prompts the user for the name of the CSV file and create an instance of MyFileProcessor class with the 
+    # input file name and proceeds to commit the functions in that class
 def main():
     input_file = input("Type the name of the CSV file you want to know the modus of, for example input.csv: ")
     file_processor = MyFileProcessor(input_file)
     data = file_processor.open_file()
-    file_processor.modus_calculation(data)
+    data_sorted = file_processor.prepare_data(data)
+    data_sorted = file_processor.bubble_sort(data_sorted)
+    most_common, frequency = file_processor.modus_finder(data_sorted)
+    file_processor.print_modus(most_common, frequency)
 
 main()
