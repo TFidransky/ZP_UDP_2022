@@ -1,8 +1,8 @@
 
 class CharFrequencyAnalyzer:
-        # Constructor that prompts user for input string.
+        # Constructor
     def __init__(self, string):
-        self.string = string.upper()
+        self.string = string
         self.unwanted_chars = ".,:!?_-;%ˇ´<>'(){}[]\" "
 
         # Counts the frequency of each character in the input string and prints the results in descending order (from most frequent to least frequent).
@@ -10,8 +10,9 @@ class CharFrequencyAnalyzer:
             # The program doesn't count special symbols like . , : and simillar. It could be modified so it would count only letters from specific alphabets and/or numbers, 
             # but it would not be as universal, because different alphabets use specific symbols, such as ř or š, that are not universally used and therefore it would be hard to implement a universal counter
         # Lastly, the function returns a list of characters sorted from the most frequent to the least frequent. This list is used in the print function.
-    def char_freq(self):
+    def char_freq_counter(self):
         char_freq = {}
+        self.string = self.string.upper()
 
         for char in self.string:
             if char not in self.unwanted_chars:
@@ -44,14 +45,13 @@ class CharFrequencyAnalyzer:
             print("Invalid input. There were only unwanted characters in your input. Try again.")
             return self.get_valid_input()
 
-      # Main function that calls the char_freq function if a valid input string is provided.
-    def main(self):
-        self.string = self.get_valid_input()
-        self.char_freq()
-        self.print_char_freq()
-
     # First the istance of CharFrequencyAnalyzer class is created with empty string as input. Then the main function of this instance gets called, 
     # which controls the input and proper calling of individual functions.
-analyzer = CharFrequencyAnalyzer('')
-analyzer.main()
+def main():
+    analyzer = CharFrequencyAnalyzer('')
+    analyzer.string = analyzer.get_valid_input()
+    analyzer.char_freq_counter()
+    analyzer.print_char_freq(analyzer.char_freq)
 
+
+main()
